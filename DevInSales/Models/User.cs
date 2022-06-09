@@ -1,3 +1,4 @@
+using DevInSales.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DevInSales.Models;
@@ -14,6 +15,7 @@ public class User
     public string Name { get; set; }
     [Column("birth_date")]
     public DateTime BirthDate { get; set; }
+
     public Profile Profile { get; set; }
     public int ProfileId { get; set; }
 

@@ -15,7 +15,7 @@ namespace DevInSales.api.Services
             var claims = new Claim[] 
              {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Role, user.Profile.Name)
+                    new Claim(ClaimTypes.Role, user.Profile.ToString())
              };
 
             return GenerateToken(claims);
