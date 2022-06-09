@@ -15,8 +15,9 @@ public class User
     public string Name { get; set; }
     [Column("birth_date")]
     public DateTime BirthDate { get; set; }
-
+   
     public Profile Profile { get; set; }
+    [ForeignKey("Profile")]
     public int ProfileId { get; set; }
 
     public User()

@@ -3,6 +3,7 @@ using DevInSales.api.Services;
 using DevInSales.Context;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.api.Controllers
 {
@@ -22,7 +23,7 @@ namespace DevInSales.api.Controllers
         public IActionResult Login([FromBody] UserLoginDTO dto)
         {
 
-            var user = _context.User.FirstOrDefault(x=>x.Id == dto.Id && x.Password == dto.Password);
+            var user = _context.User.Include(x=>x.Profile).FirstOrDefault(x=>x.Id == dto.Id && x.Password == dto.Password);
 
             if (user == null) return NotFound();
 
