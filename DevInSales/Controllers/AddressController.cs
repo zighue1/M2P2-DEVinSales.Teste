@@ -10,34 +10,38 @@ using DevInSales.Context;
 using DevInSales.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using DevInSales.DTOs;
-
+using Microsoft.AspNetCore.Authorization;
+using DevInSales.api.Services;
 
 namespace DevInSales.Controllers
 {
     [Route("api/address")]
     [ApiController]
+    [Authorize]
     public class AddressController : ControllerBase
     {
         private readonly SqlContext _context;
 
-        public AddressController(SqlContext context)
+      
+        private IAddressRepository _service;
+
+        public AddressController(IAddressRepository context)
         {
-            _context = context;
+            _service = context;
         }
 
         // GET: api/Addresse
         [HttpGet]
+        [Authorize(Roles =("Gerente,Usuario,Administrador"))]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddress()
         {
-            return await _context.Address.ToListAsync();
+           return _service.getAddress();
 
         }
 
         // GET: api/Addresse/5
         [HttpGet("{id}")]
-
-
-
+        [Authorize(Roles = ("Gerente,Usuario,Administrador"))]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
             var address = await _context.Address.FindAsync(id);
@@ -51,6 +55,7 @@ namespace DevInSales.Controllers
         }
 
         [HttpGet("address")]
+        [Authorize(Roles = ("Gerente,Usuario,Administrador"))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         //public async Task<ActionResult<IEnumerable<AddressDTO>>> GetAddress(string CEP, string Street, CityStateDTO CityStateDTO)
@@ -90,7 +95,7 @@ namespace DevInSales.Controllers
 
         }
 
-
+        [Authorize(Roles = ("Gerente,Administrador"))]
         // PUT: api/Addresse/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -122,17 +127,19 @@ namespace DevInSales.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = ("Gerente,Administrador"))]
         // POST: api/Addresse
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Address>> PostAddress(Address address)
         {
-            _context.Address.Add(address);
-            await _context.SaveChangesAsync();
+            _service.PostAddress(address);
+           // _context.Address.Add(address);
+           // await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAddress", new { id = address.Id }, address);
         }
-
+        [Authorize(Roles = ("Administrador"))]
         // DELETE: api/Addresse/5
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -182,6 +189,7 @@ namespace DevInSales.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPatch("{id}")]
+        [Authorize(Roles = ("Gerente,Administrador"))]
         public async Task<ActionResult> Patch(int id, [FromBody] JsonPatchDocument<Address> patchAddress)
         {
             try

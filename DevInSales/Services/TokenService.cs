@@ -25,7 +25,10 @@ namespace DevInSales.api.Services
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("7cs76bgb5s9dkeQZWL7m3xx6gDqRyZcMp2cpSJB6qyuLrSS73panSY4EKBGgBCYn=");
+
+            //TODO
+            var secret = ConfigurationHelper.config.GetSection("TokenConfigurations:SecretJwtKey").Value;
+            var key = Encoding.ASCII.GetBytes(secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

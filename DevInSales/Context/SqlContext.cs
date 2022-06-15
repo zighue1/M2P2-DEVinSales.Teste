@@ -7,21 +7,21 @@ namespace DevInSales.Context;
 public class SqlContext : DbContext
 {
     public SqlContext(DbContextOptions<SqlContext> options) : base(options) { }
-    public DbSet<User> User { get; set; }
-    public DbSet<Profile> Profile { get; set; }
-    public DbSet<Product> Product { get; set; }
-    public DbSet<Category> Category { get; set; }
+    public virtual DbSet<User> User { get; set; }
+    public virtual DbSet<Profile> Profile { get; set; }
+    public virtual DbSet<Product> Product { get; set; }
+    public virtual  DbSet<Category> Category { get; set; }
 
-    public DbSet<City> City { get; set; }
-    public DbSet<State> State { get; set; }
-    public DbSet<Address> Address { get; set; }
+    public virtual DbSet<City> City { get; set; }
+    public virtual DbSet<State> State { get; set; }
+    public virtual DbSet<Address> Address { get; set; }
 
-    public DbSet<OrderProduct> Order_Product { get; set; }
-    public DbSet<Order> Order { get; set; }
-    public DbSet<Delivery> Delivery { get; set; }
-    public DbSet<CityPrice> CityPrice { get; set; }
-    public DbSet<StatePrice> StatePrice { get; set; }
-    public DbSet<ShippingCompany> ShippingCompany { get; set; }
+    public virtual DbSet<OrderProduct> Order_Product { get; set; }
+    public virtual DbSet<Order> Order { get; set; }
+    public virtual DbSet<Delivery> Delivery { get; set; }
+    public virtual DbSet<CityPrice> CityPrice { get; set; }
+    public virtual DbSet<StatePrice> StatePrice { get; set; }
+    public virtual DbSet<ShippingCompany> ShippingCompany { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,7 +39,7 @@ public class SqlContext : DbContext
 
         modelBuilder.Entity<State>().HasData(StateSeed.Seed);
 
-        modelBuilder.Entity<City>().HasData(CitySeed.Seed());
+        //modelBuilder.Entity<City>().HasData(CitySeed.Seed());
 
         modelBuilder.Entity<Address>().HasData(AddressSeed.Seed);
 

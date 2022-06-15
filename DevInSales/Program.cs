@@ -1,3 +1,4 @@
+using DevInSales.api.Services;
 using DevInSales.Context;
 
 
@@ -22,11 +23,14 @@ builder.Services.AddSwaggerGen(opt =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     opt.IncludeXmlComments(xmlPath);
 });
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
 builder.Services.AddDbContext<SqlContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 
-var key = Encoding.ASCII.GetBytes("MINHACHAVESECRETA");
+ConfigurationHelper.Initialize(builder.Configuration);
+var secret = builder.Configuration.GetValue<string>("TokenConfigurations:SecretJwtKey");
+var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(x =>
 {
@@ -63,3 +67,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

@@ -28,7 +28,7 @@ namespace DevInSales.api.Controllers
             if (user == null) return NotFound();
 
             var token = TokenService.GenerateToken(user);
-          //  var newRefreshToken = TokenService.GenerateRefreshToken();
+           // var newRefreshToken = TokenService.GenerateRefreshToken();
            // TokenService.SaveRefreshToken(user.Username, newRefreshToken);
 
             return Ok(new
