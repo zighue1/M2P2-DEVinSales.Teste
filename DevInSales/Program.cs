@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 
 builder.Services.AddDbContext<SqlContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
+
+//builder.Services.AddDbContext<SqlContext>(opts => opts.UseNpgsql(builder.Configuration.GetConnectionString("ServerConnection")));
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 
 ConfigurationHelper.Initialize(builder.Configuration);
@@ -51,6 +53,7 @@ builder.Services.AddAuthentication(x =>
 });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -44,7 +44,7 @@ namespace DevInSales.Controllers
         [Authorize(Roles = ("Gerente,Usuario,Administrador"))]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
-            var address = await _context.Address.FindAsync(id);
+            var address = _service.getAddress(id);
 
             if (address == null)
             {
@@ -75,24 +75,8 @@ namespace DevInSales.Controllers
 
         public async Task<ActionResult<AddressDTO>> GetAddress(string CEP, string Street, CityStateDTO CityStateDTO)
         {
-            //return _sqlContext.Clientes.Include(x => x.Endereco).Select(x => (ClienteDTO)x).ToList();
-            var street_find = await _context.Address.FindAsync(Street);
-            var cep_find = await _context.Address.FindAsync(CEP);
-
-            if (street_find == null && cep_find == null)
-            {
-                return NoContent();
-               
-                List<AddressDTO> addresses = new List<AddressDTO>();
-                addresses.Add(new AddressDTO());
-
-
-            }
-            else
-            {
-                return new AddressDTO();
-            }
-
+       
+            return await _service.getAddress(CEP, Street, CityStateDTO);
         }
 
         [Authorize(Roles = ("Gerente,Administrador"))]

@@ -4,6 +4,7 @@
 
 namespace DevInSales.Migrations
 {
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     public partial class AjusteSeedsUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

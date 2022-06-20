@@ -6,7 +6,9 @@ namespace DevInSales.Context;
 
 public class SqlContext : DbContext
 {
-    public SqlContext(DbContextOptions<SqlContext> options) : base(options) { }
+    public SqlContext(DbContextOptions<SqlContext> options) : base(options) {
+       // AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
     public virtual DbSet<User> User { get; set; }
     public virtual DbSet<Profile> Profile { get; set; }
     public virtual DbSet<Product> Product { get; set; }

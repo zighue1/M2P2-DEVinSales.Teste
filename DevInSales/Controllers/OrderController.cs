@@ -43,7 +43,7 @@ namespace DevInSales.Controllers
 
                 if (listaVendas == null) return StatusCode(404);
 
-                return listaVendas;
+                return Ok(listaVendas);
             }
             catch
             {
